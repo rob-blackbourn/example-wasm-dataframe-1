@@ -1,0 +1,10 @@
+{
+  "editor.rulers": [80],
+  "javascript.validate.enable": false,
+  "standard.enable": false,
+  "standard.autoFixOnSave": true,
+  "[javascript]": {
+    "editor.formatOnSave": false,
+    "editor.tabSize": 2
+  }
+}

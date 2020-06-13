@@ -42,6 +42,30 @@ function makeBinaryOperation(wasmFunctionManager, intFunc, doubleFunc, defaultFu
   }
 }
 
+function makeUnaryOperation(wasmFunctionManager, intFunc, doubleFunc, defaultFunc) {
+  return (series) => {
+
+    if (series.type === 'int') {
+      const result = wasmFunctionManager.invokeUnaryFunction(
+        intFunc,
+        series.array,
+        Int32Array
+      )
+      return [result, series.type]
+    } else if (series.type === 'double') {
+      const result = wasmFunctionManager.invokeUnaryFunction(
+        doubleFunc,
+        series.array,
+        Float64Array
+      )
+      return [result, series.type]
+    } else {
+      const result = defaultFunc(series)
+      return [result, series.type]
+    }
+  }
+}
+
 export async function setupWasm () {
   // Read the wasm file.
   const buf = fs.readFileSync('./src-wasm/data-frame.wasm')
@@ -64,7 +88,7 @@ export async function setupWasm () {
     addFloat64Arrays,
     subtractFloat64Arrays,
     multiplyFloat64Arrays,
-    dividedFloat64Arrays,
+    divideFloat64Arrays,
     negateFloat64Array
 
   } = res.instance.exports
@@ -80,4 +104,45 @@ export async function setupWasm () {
       (lhs, rhs) => lhs.array.map((value, index) => value + rhs.array[index])
     )
   )
+
+  arrayMethods.set(
+    Symbol.for('-'),
+    makeBinaryOperation(
+      wasmFunctionManager,
+      subtractInt32Arrays,
+      subtractFloat64Arrays,
+      (lhs, rhs) => lhs.array.map((value, index) => value - rhs.array[index])
+    )
+  )
+
+  arrayMethods.set(
+    Symbol.for('*'),
+    makeBinaryOperation(
+      wasmFunctionManager,
+      multiplyInt32Arrays,
+      multiplyFloat64Arrays,
+      (lhs, rhs) => lhs.array.map((value, index) => value * rhs.array[index])
+    )
+  )
+
+  arrayMethods.set(
+    Symbol.for('/'),
+    makeBinaryOperation(
+      wasmFunctionManager,
+      divideInt32Arrays,
+      divideFloat64Arrays,
+      (lhs, rhs) => lhs.array.map((value, index) => value / rhs.array[index])
+    )
+  )
+
+  arrayMethods.set(
+    Symbol.for('minus'),
+    makeUnaryOperation(
+      wasmFunctionManager,
+      negateInt32Array,
+      negateFloat64Array,
+      (series) => series.array.map(value => -value)
+    )
+  )
+  
 }

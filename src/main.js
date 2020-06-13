@@ -51,18 +51,6 @@ function example () {
   console.log(df.toString())
 }
 
-function guessBestType(lhsType, rhsType) {
-  if (lhsType === 'int' && rhsType == 'int') {
-    return 'int'
-  } else if (
-    (lhsType === 'int' && rhsType === 'double') || 
-    (lhsType === 'double' && rhsType === 'int')) {
-    return 'double'
-  } else {
-    return 'object'
-  }
-}
-
 async function main () {
   await setupWasm()
 

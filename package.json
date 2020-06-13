@@ -17,7 +17,7 @@
     "@babel/preset-env": "^7.10.2",
     "@jetblack/operator-overloading": "git+https://github.com/rob-blackbourn/jetblack-operator-overloading.git#0.1.0",
     "babel-eslint": "^10.1.0",
-    "standard": "^14.3.4"
+    "eslint": "^7.2.0"
   },
   "dependencies": {}
 }

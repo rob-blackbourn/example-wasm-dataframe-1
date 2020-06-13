@@ -24,10 +24,4 @@ class ArrayMethods {
 const instance = new ArrayMethods()
 Object.freeze(instance)
 
-// instance.set(Symbol.for('+'), (lhs, rhs) => lhs.array.map((value, index) => value + rhs.array[index]))
-// instance.set(Symbol.for('-'), (lhs, rhs) => lhs.array.map((value, index) => value - rhs.array[index]))
-// instance.set(Symbol.for('*'), (lhs, rhs) => lhs.array.map((value, index) => value * rhs.array[index]))
-// instance.set(Symbol.for('/'), (lhs, rhs) => lhs.array.map((value, index) => value / rhs.array[index]))
-// instance.set(Symbol.for('minus'), (lhs) => lhs.array.map((value, index) => -value))
-
 export default instance

@@ -143,6 +143,5 @@ export async function setupWasm () {
       negateFloat64Array,
       (series) => series.array.map(value => -value)
     )
-  )
-  
+  ) 
 }

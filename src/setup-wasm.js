@@ -3,7 +3,7 @@ import fs from 'fs'
 import arrayMethods from './array-methods'
 import { WasmFunctionManager } from './WasmFunctionManager'
 
-function guessBestType(lhsType, rhsType) {
+function chooseBestType(lhsType, rhsType) {
   if (lhsType === 'int' && rhsType == 'int') {
     return 'int'
   } else if (
@@ -17,7 +17,7 @@ function guessBestType(lhsType, rhsType) {
 
 function makeBinaryOperation(wasmFunctionManager, intFunc, doubleFunc, defaultFunc) {
   return (lhs, rhs) => {
-    const bestType = guessBestType(lhs.type, rhs.type)
+    const bestType = chooseBestType(lhs.type, rhs.type)
 
     if (bestType === 'int') {
       const result =  wasmFunctionManager.invokeBinaryFunction(

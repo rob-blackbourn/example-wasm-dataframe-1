@@ -34,12 +34,12 @@ export class DataFrame {
     })
   }
 
-  static fromObject (data, methods) {
+  static fromObject (data, types) {
     const series = {}
     for (let i = 0; i < data.length; i++) {
       for (const column in data[i]) {
         if (!(column in series)) {
-          series[column] = new Series(column, new Array(data.length), methods)
+          series[column] = new Series(column, new Array(data.length), types[column])
         }
         series[column][i] = data[i][column]
       }
@@ -65,6 +65,7 @@ export class DataFrame {
       }
       s += row.join(', ') + '\n'
     }
+    s += columns.map(column => this.series[column].type).join(', ') + '\n'
     return s
   }
 }

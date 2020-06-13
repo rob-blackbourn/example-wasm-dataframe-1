@@ -3,41 +3,37 @@ import fs from 'fs'
 import { Series } from './Series'
 import arrayMethods from './array-methods'
 import { DataFrame } from './DataFrame'
-import { WasmFunctionManager } from './WasmFunctionManager'
 import { setupWasm } from './setup-wasm'
 
 function example () {
   'operator-overloading enabled'
 
-  // const s1 = new Series('s1', [1, 2, 3, 4], 'int')
-  // const s2 = new Series('s2', [5, 6, 7, 8], 'int')
-  // const s3 = s1 + s2
-  // console.log(s3.toString())
+  const s1 = new Series('s1', [1, 2, 3, 4], 'int')
+  const s2 = new Series('s2', [5, 6, 7, 8], 'int')
+  const s3 = s1 + s2
+  console.log(s3.toString())
 
-  // const height = new Series('height', [1.82, 1.72, 1.64, 1.88])
-  // console.log(height)
+  const height = new Series('height', [1.82, 1.72, 1.64, 1.88], 'double')
+  console.log(height.toString())
 
-  // const minusHeight = -height
-  // console.log(minusHeight.toString())
+  const minusHeight = -height
+  console.log(minusHeight.toString())
 
-  // arrayMethods.add(Symbol.for('**'), (lhs, rhs) => lhs.array.map((value, index) => value ** rhs))
-  // const sqrHeight = height ** 2
-  // console.log(sqrHeight.toString())
+  arrayMethods.set(Symbol.for('**'), (lhs, rhs) => [lhs.array.map((value, index) => value ** rhs), 'object'])
+  const sqrHeight = height ** 2
+  console.log(sqrHeight.toString())
 
-  // arrayMethods.add('max', (lhs) => Math.max(...height))
-  // const maxHeight = height.max()
-  // console.log(maxHeight)
+  arrayMethods.set('max', (lhs) => [[Math.max(...height)], lhs.type])
+  const maxHeight = height.max()
+  console.log(maxHeight.toString())
 
-  // console.log(`${height}`)
-  // console.log(height.toString())
+  const weight = new Series('weight', [81.4, 72.3, 69.9, 79.5])
+  const ratio = weight / height
+  console.log(ratio.toString())
 
-  // const weight = new Series('weight', [81.4, 72.3, 69.9, 79.5])
-  // const ratio = weight / height
-  // console.log(ratio.toString())
-
-  // const s1 = new Series('numbers', [1, 2, 3, 4])
-  // s1.push(5)
-  // console.log(s1.toString())
+  const s4 = new Series('numbers', [1, 2, 3, 4], 'int')
+  s4.push(5)
+  console.log(s4.toString())
 
   const df = DataFrame.fromObject(
     [

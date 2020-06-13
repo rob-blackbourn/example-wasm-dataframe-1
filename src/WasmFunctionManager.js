@@ -19,14 +19,17 @@ export class WasmFunctionManager {
   }
 
   invokeUnaryFunction(func, array, typedArrayType) {
+    let input = null
+    let output = null
+
     try {
-      const input = this.createTypedArray(typedArrayType, array.length)
+      input = this.createTypedArray(typedArrayType, array.length)
       input.set(array)
 
-      const output = new typedArrayTynamepe(
+      output = new typedArrayType(
         this.memory.buffer,
         func(input.byteOffset, array.length),
-        array.lengthlength
+        array.length
       )
 
       if (output.byteOffset === 0) {
@@ -37,7 +40,7 @@ export class WasmFunctionManager {
 
       return result
     } finally {
-      this.freeMemory(input1.byteOffset)
+      this.freeMemory(input.byteOffset)
       this.freeMemory(output.byteOffset)
     }
   }

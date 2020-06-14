@@ -43,7 +43,7 @@ function example () {
     { col0: 'object', col1: 'int', col2: 'double'}
   )
   console.log(df.toString())
-  df.col3 = df.col1 + df.col2
+  df['col3'] = df['col1'] + df['col2']
   console.log(df.toString())
 }
 
